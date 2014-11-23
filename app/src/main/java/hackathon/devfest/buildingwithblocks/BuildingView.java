@@ -6,6 +6,10 @@ import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Point;
+import android.hardware.Sensor;
+import android.hardware.SensorEvent;
+import android.hardware.SensorEventListener;
+import android.hardware.SensorManager;
 import android.support.v4.view.GestureDetectorCompat;
 import android.util.AttributeSet;
 import android.util.Log;
@@ -13,13 +17,14 @@ import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.View;
 
-public class BuildingView extends View implements GestureDetector.OnGestureListener, GestureDetector.OnDoubleTapListener {
+public class BuildingView extends View implements GestureDetector.OnGestureListener, GestureDetector.OnDoubleTapListener, SensorEventListener {
 
     private int act_cursor_y=0;
     private int act_cursor_x=BLOCKS_X/2+1;
 
     private final static int BLOCKS_X = 23;
     private final static int BLOCKS_Y = 23;
+    private final static float ACCELERATION_TRESHOLD = 3.0f;
 
     private final int[][] backingArray = new int[BLOCKS_X][BLOCKS_Y];
 
@@ -28,7 +33,8 @@ public class BuildingView extends View implements GestureDetector.OnGestureListe
     private final Paint paint;
 
     private GestureDetectorCompat detector;
-
+    private SensorManager sensorManager;
+    private Sensor accelerometer;
     private IHouseSpec spec;
 
     public BuildingView(Context context, AttributeSet attrs) {
@@ -48,6 +54,17 @@ public class BuildingView extends View implements GestureDetector.OnGestureListe
 
         detector = new GestureDetectorCompat(context, this);
         detector.setOnDoubleTapListener(this);
+        sensorManager = (SensorManager) context.getSystemService(Context.SENSOR_SERVICE);
+
+        if (sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER) != null) {
+            accelerometer = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
+            sensorManager.registerListener(this, accelerometer, SensorManager.SENSOR_DELAY_NORMAL);
+        }
+        else {
+            // Sorry, there are no accelerometers on your device.
+            // You can't play this game.
+            Log.d("LOG_TAG", "device has no ACCELEROMETER, use pad or fingers!");
+        }
     }
 
 
@@ -55,6 +72,14 @@ public class BuildingView extends View implements GestureDetector.OnGestureListe
 
 
         act_cursor_y++;
+
+        if (act_cursor_x >= BLOCKS_X) {
+            act_cursor_x = BLOCKS_X -1;
+        }
+
+        if (act_cursor_x <= 0) {
+            act_cursor_x = 0;
+        }
 
         if (act_cursor_y==BLOCKS_Y-1 || backingArray[act_cursor_x][act_cursor_y+1]>0){
             backingArray[act_cursor_x][act_cursor_y]=1;
@@ -219,5 +244,25 @@ public class BuildingView extends View implements GestureDetector.OnGestureListe
     public boolean onFling(MotionEvent motionEvent, MotionEvent motionEvent2, float v, float v2) {
         // nop
         return false;
+    }
+
+    @Override
+    public void onSensorChanged(final SensorEvent sensorEvent) {
+        final Sensor sensor = sensorEvent.sensor;
+
+        if (sensor.getType() == Sensor.TYPE_ACCELEROMETER) {
+            float y = sensorEvent.values[1];
+
+            if (y < -ACCELERATION_TRESHOLD) {
+                moveLeft();
+            } else if (y > ACCELERATION_TRESHOLD) {
+                moveRight();
+            }
+        }
+    }
+
+    @Override
+    public void onAccuracyChanged(Sensor sensor, int i) {
+        // do nothing
     }
 }
