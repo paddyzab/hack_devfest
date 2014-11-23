@@ -4,8 +4,8 @@ package hackathon.devfest.buildingwithblocks;
  * Created by lukasz.
  */
 public class HouseSpec implements IHouseSpec {
-    public final static int SIZE=10;
-    public int[][] plan = new int[10][10];
+    private final static int SIZE=10;
+    public int[][] plan = new int[SIZE][SIZE];
 
     public HouseSpec() {
                                                                         plan[1][5] = 1;
@@ -23,5 +23,10 @@ public class HouseSpec implements IHouseSpec {
     @Override
     public int[][] getPlan() {
         return plan;
+    }
+
+    @Override
+    public int getSize() {
+        return SIZE;
     }
 }

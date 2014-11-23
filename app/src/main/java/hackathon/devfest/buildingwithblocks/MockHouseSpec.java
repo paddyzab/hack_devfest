@@ -4,12 +4,20 @@ package hackathon.devfest.buildingwithblocks;
  * Created by lukasz.
  */
 public class MockHouseSpec implements IHouseSpec {
-    public int[][] getPlan() {
-        int[][] mock = new int[HouseSpec.SIZE][HouseSpec.SIZE];
 
-        mock[8][5] = 1;
-        mock[9][5] = 1; mock[9][6] = 1;
+    public static final int SIZE = 2;
+
+    public int[][] getPlan() {
+        int[][] mock = new int[SIZE][SIZE];
+
+        mock[1][0] = 1;
+        mock[1][1] = 1; mock[0][1] = 1;
 
         return mock;
+    }
+
+    @Override
+    public int getSize() {
+        return 2;
     }
 }

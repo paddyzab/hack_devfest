@@ -18,6 +18,7 @@ public class MainActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+
         view = (BuildingView) findViewById(R.id.building_view);
         gameStats = (GameStateView) findViewById(R.id.game_stats);
 

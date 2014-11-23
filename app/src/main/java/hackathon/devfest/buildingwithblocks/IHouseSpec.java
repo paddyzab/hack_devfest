@@ -5,4 +5,5 @@ package hackathon.devfest.buildingwithblocks;
  */
 public interface IHouseSpec {
     public int[][] getPlan();
+    public int getSize();
 }

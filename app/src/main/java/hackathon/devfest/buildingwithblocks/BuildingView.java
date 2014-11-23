@@ -53,14 +53,25 @@ public class BuildingView extends View implements GestureDetector.OnGestureListe
 
     public void update() {
 
-        invalidate();
+
         act_cursor_y++;
 
         if (act_cursor_y==BLOCKS_Y-1 || backingArray[act_cursor_x][act_cursor_y+1]>0){
             backingArray[act_cursor_x][act_cursor_y]=1;
             act_cursor_y=0;
-        }
 
+           final Point point = find();
+
+            if (point!=null) {
+                for (int x = 0; x < BLOCKS_X; x++) {
+                    for (int y = 0; y <BLOCKS_Y; y++) {
+                        backingArray[x][y] = 1;
+                    }
+
+                }
+            }
+        }
+        invalidate();
 
     }
 
@@ -94,28 +105,34 @@ public class BuildingView extends View implements GestureDetector.OnGestureListe
     }
 
     private Point find() {
-//        final HouseSpec spec = new HouseSpec();
-        for(int x = 0; x<BLOCKS_X - HouseSpec.SIZE; x++) {
-            for(int y = 0; y<BLOCKS_Y - HouseSpec.SIZE; x++) {
+            int x;int y;int xx;int yy;
+        for( x = 0; x<=BLOCKS_X - spec.getSize(); x++) {
+            for( y = 0; y<=BLOCKS_Y - spec.getSize(); y++) {
                 boolean maching = true;
                 exit:
                 if (maching) {
 
-                    for(int xx = 0; xx<HouseSpec.SIZE; xx++) {
-                        for(int yy = 0; yy<HouseSpec.SIZE; yy++) {
+                    for( xx = 0; xx<spec.getSize(); xx++) {
+                        for( yy = 0; yy<spec.getSize(); yy++) {
+
                             maching &= backingArray[x + xx][y + yy] == spec.getPlan()[xx][yy];
                             if (!maching) {
                                 break exit;
                             }
+
                         }
                     }
                 }
 
+
                 if (maching) {
                     return new Point(x, y);
                 }
+
             }
         }
+
+
         return null;
     }
 
