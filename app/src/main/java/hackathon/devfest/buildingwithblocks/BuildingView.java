@@ -51,6 +51,9 @@ public class BuildingView extends View implements GestureDetector.OnGestureListe
 
         invalidate();
         act_cursor_y++;
+        if (act_cursor_y==BLOCKS_Y) {
+            act_cursor_y=0;
+        }
     }
 
     @Override
