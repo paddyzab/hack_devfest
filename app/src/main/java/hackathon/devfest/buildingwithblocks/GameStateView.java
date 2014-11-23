@@ -20,14 +20,24 @@ public class GameStateView extends FrameLayout {
         points = (TextView) findViewById(R.id.textViewPoints);
     }
 
+    public void incrementTime() {
+        elapsedTimeCounter++;
+        elapsedTime.setText("" + elapsedTimeCounter);
+    }
+
+    public void resetTime() {
+        elapsedTimeCounter = 0;
+        elapsedTime.setText("" + elapsedTimeCounter);
+    }
+
     public void incrementPoints() {
         pointsCounter++;
         points.setText("" + pointsCounter);
 
     }
 
-    public void incrementTime() {
-        elapsedTimeCounter++;
-        elapsedTime.setText("" + elapsedTimeCounter);
+    public void resetPoints() {
+        pointsCounter = 0;
+        points.setText("" + pointsCounter);
     }
 }
