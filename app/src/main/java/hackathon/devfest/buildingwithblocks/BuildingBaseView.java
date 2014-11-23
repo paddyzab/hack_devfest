@@ -24,12 +24,9 @@ abstract class BuildingBaseView extends View {
     protected int blockSize;
     protected final Paint paint;
 
-    protected IHouseSpec spec;
-
     public BuildingBaseView(Context context, AttributeSet attrs) {
         super(context, attrs);
 
-        spec = new HouseSpec();
         backingArray = new int[getBlocksX()][getBlocksY()];
 
         paint = new Paint();

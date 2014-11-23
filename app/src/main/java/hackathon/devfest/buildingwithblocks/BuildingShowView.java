@@ -12,20 +12,20 @@ public class BuildingShowView extends BuildingBaseView {
 
     @Override
     protected int getBlocksX() {
-        return spec.getSize();
+        return App.getSpec().getSize();
     }
 
     @Override
     protected int getBlocksY() {
-        return spec.getSize();
+        return App.getSpec().getSize();
     }
 
     public BuildingShowView(Context context, AttributeSet attrs) {
         super(context, attrs);
 
-        for (int x = 0; x < spec.getSize(); x++) {
-            for (int y = 0; y < spec.getSize(); y++) {
-                backingArray[x][y] = spec.getPlan()[y][x];
+        for (int x = 0; x < App.getSpec().getSize(); x++) {
+            for (int y = 0; y < App.getSpec().getSize(); y++) {
+                backingArray[x][y] = App.getSpec().getPlan()[y][x];
             }
 
         }

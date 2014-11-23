@@ -44,13 +44,13 @@ public class MainActivity extends ActionBarActivity {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 view.reset();
+                                gameStats.resetPoints();
+                                gameStats.resetTime();
+
                             }
                         })
                         .show();
 
-                view.reset();
-                gameStats.resetPoints();
-                gameStats.resetTime();
             }
         });
 

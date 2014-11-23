@@ -23,12 +23,11 @@ public class BuildingGameView extends BuildingBaseView implements GestureDetecto
     private final static float ACCELERATION_TRESHOLD = 3.0f;
 
 
-    private boolean finished=false;
+    private boolean finished = false;
 
     private GestureDetectorCompat detector;
     private SensorManager sensorManager;
     private Sensor accelerometer;
-    private IHouseSpec spec;
 
     private GameUpdateListener listener;
 
@@ -44,16 +43,6 @@ public class BuildingGameView extends BuildingBaseView implements GestureDetecto
 
     public BuildingGameView(Context context, AttributeSet attrs) {
         super(context, attrs);
-
-        spec = new MockHouseSpec();
-
-        /*for (int x = 0; x < HouseSpec.SIZE; x++) {
-            for (int y = 0; y < HouseSpec.SIZE; y++) {
-                backingArray[x][y] = spec.getPlan()[y][x];
-            }
-
-        }
-        */
 
         detector = new GestureDetectorCompat(context, this);
         detector.setOnDoubleTapListener(this);
@@ -83,7 +72,7 @@ public class BuildingGameView extends BuildingBaseView implements GestureDetecto
 
 
             if (act_cursor_y == 1) {
-                finished=true;
+                finished = true;
                 listener.onGameEnded();
                 return;
             }
@@ -98,8 +87,8 @@ public class BuildingGameView extends BuildingBaseView implements GestureDetecto
                 listener.onHouseCompleted();
 
 
-                for (int x = 0; x < spec.getSize(); x++) {
-                    for (int y = 0; y < spec.getSize(); y++) {
+                for (int x = 0; x < App.getSpec().getSize(); x++) {
+                    for (int y = 0; y < App.getSpec().getSize(); y++) {
                         backingArray[point.x + x][point.y + y] = 0;
                     }
 
@@ -121,16 +110,16 @@ public class BuildingGameView extends BuildingBaseView implements GestureDetecto
 
     private Point find() {
 
-        for (int x = 0; x <= getBlocksX() - spec.getSize(); x++) {
-            for (int y = 0; y <= getBlocksY() - spec.getSize(); y++) {
+        for (int x = 0; x <= getBlocksX() - App.getSpec().getSize(); x++) {
+            for (int y = 0; y <= getBlocksY() - App.getSpec().getSize(); y++) {
                 boolean maching = true;
                 exit:
                 if (maching) {
 
-                    for (int xx = 0; xx < spec.getSize(); xx++) {
-                        for (int yy = 0; yy < spec.getSize(); yy++) {
+                    for (int xx = 0; xx < App.getSpec().getSize(); xx++) {
+                        for (int yy = 0; yy < App.getSpec().getSize(); yy++) {
 
-                            maching &= backingArray[x + xx][y + yy] == spec.getPlan()[xx][yy];
+                            maching &= backingArray[x + xx][y + yy] == App.getSpec().getPlan()[xx][yy];
                             if (!maching) {
                                 break exit;
                             }
@@ -171,8 +160,8 @@ public class BuildingGameView extends BuildingBaseView implements GestureDetecto
     public void moveRight() {
         if (act_cursor_x <= getBlocksX()) {
             act_cursor_x++;
-            if(act_cursor_x >= getBlocksX()) {
-                act_cursor_x = getBlocksX() -1;
+            if (act_cursor_x >= getBlocksX()) {
+                act_cursor_x = getBlocksX() - 1;
             }
         }
     }
@@ -267,7 +256,7 @@ public class BuildingGameView extends BuildingBaseView implements GestureDetecto
     @Override
     public void reset() {
         super.reset();
-        finished=false;
+        finished = false;
 
     }
 }
