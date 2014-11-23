@@ -45,7 +45,9 @@ public class BuildingView extends View implements GestureDetector.OnGestureListe
 
 
     public interface GameUpdateListener {
-        public void onHouseCompleted();
+        void onHouseCompleted();
+
+        void onGameEnded();
     }
 
     public BuildingView(Context context, AttributeSet attrs) {
@@ -70,14 +72,21 @@ public class BuildingView extends View implements GestureDetector.OnGestureListe
         if (sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER) != null) {
             accelerometer = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
             sensorManager.registerListener(this, accelerometer, SensorManager.SENSOR_DELAY_NORMAL);
-        }
-        else {
+        } else {
             // Sorry, there are no accelerometers on your device.
             // You can't play this game.
             Log.d("LOG_TAG", "device has no ACCELEROMETER, use pad or fingers!");
         }
     }
 
+    public void reset() {
+        for (int x = 0; x < BLOCKS_X; x++) {
+            for (int y = 0; y < BLOCKS_Y; y++) {
+                backingArray[x][y] = 0;
+            }
+        }
+        invalidate();
+    }
 
     public void update() {
 
@@ -90,12 +99,17 @@ public class BuildingView extends View implements GestureDetector.OnGestureListe
             final Point point = find();
 
             if (point != null) {
+
+                if (point.x == 0) {
+                    listener.onGameEnded();
+                }
+
                 listener.onHouseCompleted();
 
 
                 for (int x = 0; x < spec.getSize(); x++) {
                     for (int y = 0; y < spec.getSize(); y++) {
-                        backingArray[point.x+x][point.y+y] = 0;
+                        backingArray[point.x + x][point.y + y] = 0;
                     }
 
                 }
@@ -137,18 +151,15 @@ public class BuildingView extends View implements GestureDetector.OnGestureListe
     }
 
     private Point find() {
-        int x;
-        int y;
-        int xx;
-        int yy;
-        for (x = 0; x <= BLOCKS_X - spec.getSize(); x++) {
-            for (y = 0; y <= BLOCKS_Y - spec.getSize(); y++) {
+
+        for (int x = 0; x <= BLOCKS_X - spec.getSize(); x++) {
+            for (int y = 0; y <= BLOCKS_Y - spec.getSize(); y++) {
                 boolean maching = true;
                 exit:
                 if (maching) {
 
-                    for (xx = 0; xx < spec.getSize(); xx++) {
-                        for (yy = 0; yy < spec.getSize(); yy++) {
+                    for (int xx = 0; xx < spec.getSize(); xx++) {
+                        for (int yy = 0; yy < spec.getSize(); yy++) {
 
                             maching &= backingArray[x + xx][y + yy] == spec.getPlan()[xx][yy];
                             if (!maching) {

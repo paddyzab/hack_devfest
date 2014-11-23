@@ -28,6 +28,11 @@ public class MainActivity extends ActionBarActivity {
             public void onHouseCompleted() {
                 gameStats.incrementPoints();
             }
+
+            @Override
+            public void onGameEnded() {
+                view.reset();
+            }
         });
 
         gameStats = (GameStateView) findViewById(R.id.game_stats);
