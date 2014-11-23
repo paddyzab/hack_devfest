@@ -11,7 +11,7 @@ public class MainActivity extends ActionBarActivity {
 
     public static final int DELAY_MILLIS = 150;
     public static final int DELAY_TIME_MILIS = 1000;
-    private BuildingView view;
+    private BuildingGameView view;
     private GameStateView gameStats;
 
     @Override
@@ -21,9 +21,9 @@ public class MainActivity extends ActionBarActivity {
 
         setContentView(R.layout.activity_main);
 
-        view = (BuildingView) findViewById(R.id.building_view);
+        view = (BuildingGameView) findViewById(R.id.building_game_view);
 
-        view.setListener(new BuildingView.GameUpdateListener() {
+        view.setListener(new BuildingGameView.GameUpdateListener() {
             @Override
             public void onHouseCompleted() {
                 gameStats.incrementPoints();

@@ -2,7 +2,6 @@ package hackathon.devfest.buildingwithblocks;
 
 import android.content.Context;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Point;
@@ -15,22 +14,14 @@ import android.util.AttributeSet;
 import android.util.Log;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
-import android.view.View;
 
-public class BuildingView extends View implements GestureDetector.OnGestureListener, GestureDetector.OnDoubleTapListener, SensorEventListener {
+public class BuildingGameView extends BuildingBaseView implements GestureDetector.OnGestureListener, GestureDetector.OnDoubleTapListener, SensorEventListener {
 
     private int act_cursor_y = 0;
-    private int act_cursor_x = BLOCKS_X / 2 + 1;
+    private int act_cursor_x = 0;
 
-    private final static int BLOCKS_X = 23;
-    private final static int BLOCKS_Y = 23;
     private final static float ACCELERATION_TRESHOLD = 3.0f;
 
-    private final int[][] backingArray = new int[BLOCKS_X][BLOCKS_Y];
-
-    private final Bitmap[] blockImages = new Bitmap[2];
-    private int blockSize;
-    private final Paint paint;
 
     private GestureDetectorCompat detector;
     private SensorManager sensorManager;
@@ -43,16 +34,14 @@ public class BuildingView extends View implements GestureDetector.OnGestureListe
         this.listener = listener;
     }
 
-
     public interface GameUpdateListener {
         void onHouseCompleted();
 
         void onGameEnded();
     }
 
-    public BuildingView(Context context, AttributeSet attrs) {
+    public BuildingGameView(Context context, AttributeSet attrs) {
         super(context, attrs);
-
 
         spec = new MockHouseSpec();
 
@@ -63,7 +52,6 @@ public class BuildingView extends View implements GestureDetector.OnGestureListe
 
         }
         */
-        paint = new Paint();
 
         detector = new GestureDetectorCompat(context, this);
         detector.setOnDoubleTapListener(this);
@@ -79,14 +67,6 @@ public class BuildingView extends View implements GestureDetector.OnGestureListe
         }
     }
 
-    public void reset() {
-        for (int x = 0; x < BLOCKS_X; x++) {
-            for (int y = 0; y < BLOCKS_Y; y++) {
-                backingArray[x][y] = 0;
-            }
-        }
-        invalidate();
-    }
 
     public void update() {
 
@@ -94,15 +74,18 @@ public class BuildingView extends View implements GestureDetector.OnGestureListe
 
         if (act_cursor_y == BLOCKS_Y - 1 || backingArray[act_cursor_x][act_cursor_y + 1] > 0) {
             backingArray[act_cursor_x][act_cursor_y] = 1;
+
+
+            if (act_cursor_x == 0) {
+                listener.onGameEnded();
+            }
+
             act_cursor_y = 0;
 
             final Point point = find();
 
             if (point != null) {
 
-                if (point.x == 0) {
-                    listener.onGameEnded();
-                }
 
                 listener.onHouseCompleted();
 
@@ -121,33 +104,11 @@ public class BuildingView extends View implements GestureDetector.OnGestureListe
 
     }
 
-    @Override
-    protected void onSizeChanged(int w, int h, int oldw, int oldh) {
-        super.onSizeChanged(w, h, oldw, oldh);
-
-        blockSize = w / BLOCKS_X;
-        blockImages[0] = calcBitmap(blockSize, R.drawable.bg_castle);
-        blockImages[1] = calcBitmap(blockSize, R.drawable.brick_wall);
-
-    }
-
-    private Bitmap calcBitmap(float size, int resourceId) {
-        final Bitmap unscaled_bitmap = BitmapFactory.decodeResource(this.getResources(), resourceId);
-        return Bitmap.createScaledBitmap(unscaled_bitmap, (int) size, (int) size, true);
-    }
 
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
-        for (int x = 0; x < BLOCKS_X; x++) {
-            for (int y = 0; y < BLOCKS_X; y++) {
-                canvas.drawBitmap(blockImages[backingArray[x][y]], x * blockSize, y * blockSize, paint);
-            }
-        }
-
         canvas.drawBitmap(blockImages[1], act_cursor_x * blockSize, act_cursor_y * blockSize, paint);
-
-
     }
 
     private Point find() {

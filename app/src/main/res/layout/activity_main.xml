@@ -10,8 +10,8 @@
               tools:context=".MainActivity"
               android:orientation="horizontal">
 
-    <hackathon.devfest.buildingwithblocks.BuildingView
-            android:id="@+id/building_view"
+    <hackathon.devfest.buildingwithblocks.BuildingGameView
+            android:id="@+id/building_game_view"
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="match_parent"
