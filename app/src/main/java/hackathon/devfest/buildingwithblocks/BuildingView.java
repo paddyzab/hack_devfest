@@ -5,13 +5,13 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Paint;
+import android.graphics.Point;
 import android.util.AttributeSet;
 import android.view.View;
 
 public class BuildingView extends View {
 
     private int act_cursor=0;
-
 
     private final static int BLOCKS_X = 20;
     private final static int BLOCKS_Y = 100;
