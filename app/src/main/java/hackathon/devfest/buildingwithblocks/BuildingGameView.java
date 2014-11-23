@@ -72,12 +72,13 @@ public class BuildingGameView extends BuildingBaseView implements GestureDetecto
 
         act_cursor_y++;
 
-        if (act_cursor_y == BLOCKS_Y - 1 || backingArray[act_cursor_x][act_cursor_y + 1] > 0) {
+        if (act_cursor_y == getBlocksY() - 1 || backingArray[act_cursor_x][act_cursor_y + 1] > 0) {
             backingArray[act_cursor_x][act_cursor_y] = 1;
 
 
-            if (act_cursor_x == 0) {
+            if (act_cursor_y == 0) {
                 listener.onGameEnded();
+                return;
             }
 
             act_cursor_y = 0;
@@ -113,8 +114,8 @@ public class BuildingGameView extends BuildingBaseView implements GestureDetecto
 
     private Point find() {
 
-        for (int x = 0; x <= BLOCKS_X - spec.getSize(); x++) {
-            for (int y = 0; y <= BLOCKS_Y - spec.getSize(); y++) {
+        for (int x = 0; x <= getBlocksX() - spec.getSize(); x++) {
+            for (int y = 0; y <= getBlocksY() - spec.getSize(); y++) {
                 boolean maching = true;
                 exit:
                 if (maching) {
@@ -156,7 +157,7 @@ public class BuildingGameView extends BuildingBaseView implements GestureDetecto
     }
 
     public void moveRight() {
-        if (act_cursor_x <= BLOCKS_X) {
+        if (act_cursor_x <= getBlocksX()) {
             act_cursor_x++;
         }
     }
