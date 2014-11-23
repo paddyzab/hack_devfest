@@ -29,10 +29,13 @@ public class BuildingView extends View implements GestureDetector.OnGestureListe
 
     private GestureDetectorCompat detector;
 
+    private IHouseSpec spec;
+
     public BuildingView(Context context, AttributeSet attrs) {
         super(context, attrs);
 
-        HouseSpec spec = new HouseSpec();
+//        spec = new HouseSpec();
+        spec = new MockHouseSpec();
 
         for (int x = 0; x < HouseSpec.SIZE; x++) {
             for (int y = 0; y < HouseSpec.SIZE; y++) {
@@ -86,7 +89,7 @@ public class BuildingView extends View implements GestureDetector.OnGestureListe
     }
 
     private Point find() {
-        final HouseSpec spec = new HouseSpec();
+//        final HouseSpec spec = new HouseSpec();
         for(int x = 0; x<BLOCKS_X - HouseSpec.SIZE; x++) {
             for(int y = 0; y<BLOCKS_Y - HouseSpec.SIZE; x++) {
                 boolean maching = true;

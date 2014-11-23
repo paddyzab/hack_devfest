@@ -3,7 +3,7 @@ package hackathon.devfest.buildingwithblocks;
 /**
  * Created by lukasz.
  */
-public class HouseSpec {
+public class HouseSpec implements IHouseSpec {
     public final static int SIZE=10;
     public int[][] plan = new int[10][10];
 
@@ -20,9 +20,8 @@ public class HouseSpec {
 
     }
 
+    @Override
     public int[][] getPlan() {
         return plan;
     }
-
-
 }
