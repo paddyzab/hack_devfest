@@ -9,6 +9,7 @@ import android.view.MotionEvent;
 
 public class MainActivity extends ActionBarActivity {
 
+    public static final int DELAY_MILLIS = 150;
     private BuildingView view;
 
     @Override
@@ -24,12 +25,12 @@ public class MainActivity extends ActionBarActivity {
             @Override
             public void run() {
                 view.update();
-                gameLoopHandler.postDelayed(this,500);
+                gameLoopHandler.postDelayed(this, DELAY_MILLIS);
             }
         };
 
 
-        gameLoopHandler.postDelayed(updated, 500);
+        gameLoopHandler.postDelayed(updated,DELAY_MILLIS);
     }
 
     @Override

@@ -34,15 +34,16 @@ public class BuildingView extends View implements GestureDetector.OnGestureListe
     public BuildingView(Context context, AttributeSet attrs) {
         super(context, attrs);
 
-//        spec = new HouseSpec();
+
         spec = new MockHouseSpec();
 
-        for (int x = 0; x < HouseSpec.SIZE; x++) {
+        /*for (int x = 0; x < HouseSpec.SIZE; x++) {
             for (int y = 0; y < HouseSpec.SIZE; y++) {
                 backingArray[x][y] = spec.getPlan()[y][x];
             }
 
         }
+        */
         paint = new Paint();
 
         detector = new GestureDetectorCompat(context, this);
@@ -54,9 +55,13 @@ public class BuildingView extends View implements GestureDetector.OnGestureListe
 
         invalidate();
         act_cursor_y++;
-        if (act_cursor_y==BLOCKS_Y) {
+
+        if (act_cursor_y==BLOCKS_Y-1 || backingArray[act_cursor_x][act_cursor_y+1]>0){
+            backingArray[act_cursor_x][act_cursor_y]=1;
             act_cursor_y=0;
         }
+
+
     }
 
     @Override
