@@ -23,13 +23,17 @@ public class BuildingShowView extends BuildingBaseView {
     public BuildingShowView(Context context, AttributeSet attrs) {
         super(context, attrs);
 
+        init();
+    }
+
+    @Override
+    public void init() {
+        super.init();
         for (int x = 0; x < App.getSpec().getSize(); x++) {
             for (int y = 0; y < App.getSpec().getSize(); y++) {
                 backingArray[x][y] = App.getSpec().getPlan()[y][x];
             }
 
         }
-
     }
-
 }

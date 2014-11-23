@@ -24,6 +24,7 @@ public class BuildingGameView extends BuildingBaseView implements GestureDetecto
 
 
     private boolean finished = false;
+    private boolean frozen = false;
 
     private GestureDetectorCompat detector;
     private SensorManager sensorManager;
@@ -59,9 +60,17 @@ public class BuildingGameView extends BuildingBaseView implements GestureDetecto
     }
 
 
+    public void freeze() {
+        frozen = true;
+    }
+
+    public void unfreeze() {
+        frozen = false;
+    }
+
     public void update() {
 
-        if (finished) {
+        if (finished || frozen) {
             return;
         }
 

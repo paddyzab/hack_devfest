@@ -27,10 +27,13 @@ abstract class BuildingBaseView extends View {
     public BuildingBaseView(Context context, AttributeSet attrs) {
         super(context, attrs);
 
-        backingArray = new int[getBlocksX()][getBlocksY()];
-
         paint = new Paint();
 
+        init();
+    }
+
+    public void init(){
+        backingArray = new int[getBlocksX()][getBlocksY()];
     }
 
     public void reset() {
@@ -46,10 +49,14 @@ abstract class BuildingBaseView extends View {
     protected void onSizeChanged(int w, int h, int oldw, int oldh) {
         super.onSizeChanged(w, h, oldw, oldh);
 
-        blockSize = w / getBlocksX();
+        refreshSizes();
+
+    }
+
+    public void refreshSizes() {
+        blockSize = getWidth() / getBlocksX();
         blockImages[0] = calcBitmap(blockSize, R.drawable.bg_castle);
         blockImages[1] = calcBitmap(blockSize, R.drawable.brick_wall);
-
     }
 
     private Bitmap calcBitmap(float size, int resourceId) {

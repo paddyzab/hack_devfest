@@ -18,6 +18,7 @@ public class MainActivity extends ActionBarActivity {
     public static final int DELAY_TIME_MILIS = 1000;
     private BuildingGameView view;
     private GameStateView gameStats;
+    private BuildingShowView showView;
 
     private MediaPlayer mediaPlayer;
 
@@ -29,20 +30,48 @@ public class MainActivity extends ActionBarActivity {
         setContentView(R.layout.activity_main);
 
         view = (BuildingGameView) findViewById(R.id.building_game_view);
+        showView= (BuildingShowView) findViewById(R.id.show_view);
 
         view.setListener(new BuildingGameView.GameUpdateListener() {
             @Override
             public void onHouseCompleted() {
-                gameStats.incrementPoints();
+                view.freeze();
+
+                new AlertDialog.Builder(MainActivity.this).setMessage("yaay next level")
+                        .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+
+                                App.setSpec(new HouseSpec());
+                                gameStats.incrementPoints();
+                                showView.init();
+                                showView.refreshSizes();
+                                showView.invalidate();
+
+                                view.unfreeze();
+
+
+                            }
+                        })
+                        .show();
+
+
             }
 
             @Override
             public void onGameEnded() {
 
                 new AlertDialog.Builder(MainActivity.this).setMessage("you lost")
-                        .setPositiveButton("OK",new DialogInterface.OnClickListener() {
+                        .setPositiveButton("OK", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
+
+                                App.setSpec(new MockHouseSpec());
+
+                                showView.init();
+                                showView.refreshSizes();
+                                showView.invalidate();
+
                                 view.reset();
                                 gameStats.resetPoints();
                                 gameStats.resetTime();

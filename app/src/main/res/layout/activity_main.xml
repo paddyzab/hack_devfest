@@ -35,6 +35,7 @@
             android:layout_height="wrap_content" />
 
         <hackathon.devfest.buildingwithblocks.BuildingShowView
+            android:id="@+id/show_view"
             android:layout_width="100dp"
             android:layout_height="100dp"
             android:layout_gravity="center"/>
