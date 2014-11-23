@@ -61,6 +61,14 @@ public class MainActivity extends ActionBarActivity {
             @Override
             public void onGameEnded() {
 
+                mediaPlayer.stop();
+                try {
+                    prepareMediaPlayerAndPlay("lose.mp3", false);
+                    playMusic();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
                 new AlertDialog.Builder(MainActivity.this).setMessage("you lost")
                         .setPositiveButton("OK", new DialogInterface.OnClickListener() {
                             @Override
@@ -76,10 +84,15 @@ public class MainActivity extends ActionBarActivity {
                                 gameStats.resetPoints();
                                 gameStats.resetTime();
 
+                                prepareMainTrack();
                             }
                         })
                         .show();
 
+                view.reset();
+
+                gameStats.resetPoints();
+                gameStats.resetTime();
             }
         });
 
@@ -108,9 +121,12 @@ public class MainActivity extends ActionBarActivity {
         timeHandler.postDelayed(updateTime, DELAY_TIME_MILIS);
         gameLoopHandler.postDelayed(updated,DELAY_MILLIS);
 
-        mediaPlayer = new MediaPlayer();
+        prepareMainTrack();
+    }
 
+    private void prepareMainTrack() {
         try {
+            prepareMediaPlayerAndPlay("skipping_through_orchestra_pit.mp3", true);
             playMusic();
         } catch (IOException e) {
             e.printStackTrace();
@@ -118,18 +134,18 @@ public class MainActivity extends ActionBarActivity {
     }
 
     private void playMusic() throws IOException {
-        prepareMusic();
-        //mediaPlayer.start();
+        mediaPlayer.start();
     }
 
-    private void prepareMusic() throws IOException {
-        AssetFileDescriptor descriptor = getBaseContext().getAssets().openFd("skipping_through_orchestra_pit.mp3");
+    private void prepareMediaPlayerAndPlay(String fileName, boolean loop) throws IOException {
+        mediaPlayer = new MediaPlayer();
+        AssetFileDescriptor descriptor = getBaseContext().getAssets().openFd(fileName);
         long start = descriptor.getStartOffset();
         long end = descriptor.getLength();
 
         mediaPlayer.setDataSource(descriptor.getFileDescriptor(), start, end);
         mediaPlayer.prepare();
-        mediaPlayer.setLooping(true);
+        mediaPlayer.setLooping(loop);
     }
 
     @Override
@@ -144,7 +160,7 @@ public class MainActivity extends ActionBarActivity {
     protected void onResume() {
         super.onResume();
         if (!mediaPlayer.isPlaying()) {
-           // mediaPlayer.start();
+           mediaPlayer.start();
         }
     }
 
