@@ -1,10 +1,11 @@
-package building_with_blocks.hackathon.devfest.buildingwithblocks;
+package hackathon.devfest.buildingwithblocks;
 
 /**
  * Created by lukasz.
  */
 public class HouseSpec {
-    private int[][] plan = new int[10][10];
+    public final static int SIZE=10;
+    public int[][] plan = new int[10][10];
 
     public HouseSpec() {
                                                                         plan[1][5] = 1;
@@ -18,4 +19,10 @@ public class HouseSpec {
                                         plan[9][3] = 1; plan[9][4] = 1; plan[9][5] = 1; plan[9][6] = 1;
 
     }
+
+    public int[][] getPlan() {
+        return plan;
+    }
+
+
 }

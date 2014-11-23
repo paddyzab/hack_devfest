@@ -1,4 +1,4 @@
-package building_with_blocks.hackathon.devfest.buildingwithblocks;
+package hackathon.devfest.buildingwithblocks;
 
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;

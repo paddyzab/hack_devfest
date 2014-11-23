@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="building_with_blocks.hackathon.devfest.buildingwithblocks" >
+    package="hackathon.devfest.buildingwithblocks" >
 
     <application
         android:allowBackup="true"
@@ -8,8 +8,10 @@
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
         <activity
-            android:name="building_with_blocks.hackathon.devfest.buildingwithblocks.MainActivity"
-            android:label="@string/app_name" >
+            android:name="hackathon.devfest.buildingwithblocks.MainActivity"
+            android:label="@string/app_name"
+            android:screenOrientation="portrait"
+            >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

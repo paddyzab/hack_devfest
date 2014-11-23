@@ -5,7 +5,7 @@ android {
     buildToolsVersion "21.1.1"
 
     defaultConfig {
-        applicationId "building_with_blocks.hackathon.devfest.buildingwithblocks"
+        applicationId "hackathon.devfest.buildingwithblocks"
         minSdkVersion 15
         targetSdkVersion 21
         versionCode 1
