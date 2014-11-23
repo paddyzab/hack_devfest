@@ -22,6 +22,13 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="42sp"
+            android:gravity="center_horizontal"
+            android:text="Building with Blocks"
+            />
         <hackathon.devfest.buildingwithblocks.GameStateView
             android:id="@+id/game_stats"
             android:layout_width="wrap_content"
@@ -31,10 +38,16 @@
             android:layout_width="100dp"
             android:layout_height="100dp"
             android:layout_gravity="center"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+            android:gravity="center_horizontal"
+            android:text="https://github.com/paddyzab/hack_devfest"
+            />
+
     </LinearLayout>
 
-    <LinearLayout
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:layout_weight="1"></LinearLayout>
+
 </LinearLayout>
