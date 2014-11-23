@@ -15,15 +15,16 @@ import android.view.View;
 
 public class BuildingView extends View implements GestureDetector.OnGestureListener, GestureDetector.OnDoubleTapListener {
 
-    private int act_cursor = 0;
+    private int act_cursor_y=0;
+    private int act_cursor_x=BLOCKS_X/2+1;
 
-    private final static int BLOCKS_X = 20;
+    private final static int BLOCKS_X = 23;
     private final static int BLOCKS_Y = 100;
 
     private final int[][] backingArray = new int[BLOCKS_X][BLOCKS_Y];
 
     private final Bitmap[] blockImages = new Bitmap[2];
-    private float blockSize;
+    private int blockSize;
     private final Paint paint;
 
     private GestureDetectorCompat detector;
@@ -49,13 +50,14 @@ public class BuildingView extends View implements GestureDetector.OnGestureListe
     public void update() {
 
         invalidate();
+        act_cursor_y++;
     }
 
     @Override
     protected void onSizeChanged(int w, int h, int oldw, int oldh) {
         super.onSizeChanged(w, h, oldw, oldh);
 
-        blockSize = (float) w / BLOCKS_X;
+        blockSize = w / BLOCKS_X;
         blockImages[0] = calcBitmap(blockSize, R.drawable.bg_castle);
         blockImages[1] = calcBitmap(blockSize, R.drawable.brick_wall);
 
@@ -74,6 +76,10 @@ public class BuildingView extends View implements GestureDetector.OnGestureListe
                 canvas.drawBitmap(blockImages[backingArray[x][y]], x * blockSize, y * blockSize, paint);
             }
         }
+
+        canvas.drawBitmap(blockImages[1], act_cursor_x * blockSize, act_cursor_y * blockSize, paint);
+
+
     }
 
     private Point find() {

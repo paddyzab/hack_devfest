@@ -17,14 +17,17 @@ public class MainActivity extends ActionBarActivity {
 
         view = (BuildingView) findViewById(R.id.building_view);
 
+        final Handler gameLoopHandler = new Handler();
+
         final Runnable updated = new Runnable() {
             @Override
             public void run() {
                 view.update();
+                gameLoopHandler.postDelayed(this,500);
             }
         };
 
-        Handler gameLoopHandler = new Handler(Looper.getMainLooper());
+
         gameLoopHandler.postDelayed(updated, 500);
     }
 }
