@@ -38,6 +38,7 @@ public class MainActivity extends ActionBarActivity {
 
             @Override
             public void onGameEnded() {
+
                 new AlertDialog.Builder(MainActivity.this).setMessage("you lost")
                         .setPositiveButton("OK",new DialogInterface.OnClickListener() {
                             @Override
@@ -47,7 +48,9 @@ public class MainActivity extends ActionBarActivity {
                         })
                         .show();
 
-
+                view.reset();
+                gameStats.resetPoints();
+                gameStats.resetTime();
             }
         });
 
@@ -87,7 +90,7 @@ public class MainActivity extends ActionBarActivity {
 
     private void playMusic() throws IOException {
         prepareMusic();
-        mediaPlayer.start();
+        //mediaPlayer.start();
     }
 
     private void prepareMusic() throws IOException {
@@ -112,7 +115,7 @@ public class MainActivity extends ActionBarActivity {
     protected void onResume() {
         super.onResume();
         if (!mediaPlayer.isPlaying()) {
-            mediaPlayer.start();
+           // mediaPlayer.start();
         }
     }
 
