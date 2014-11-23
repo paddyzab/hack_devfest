@@ -19,7 +19,7 @@ public class BuildingView extends View implements GestureDetector.OnGestureListe
     private int act_cursor_x=BLOCKS_X/2+1;
 
     private final static int BLOCKS_X = 23;
-    private final static int BLOCKS_Y = 100;
+    private final static int BLOCKS_Y = 23;
 
     private final int[][] backingArray = new int[BLOCKS_X][BLOCKS_Y];
 
@@ -117,12 +117,16 @@ public class BuildingView extends View implements GestureDetector.OnGestureListe
         return true;
     }
 
-    private void moveLeft() {
-        Log.d("LOG_TAG", "touching left");
+    public void moveLeft() {
+        if (act_cursor_x>=0){
+            act_cursor_x--;
+        }
     }
 
-    private void moveRight() {
-        Log.d("LOG_TAG", "touching right");
+    public void moveRight() {
+        if (act_cursor_x<=BLOCKS_X) {
+            act_cursor_x++;
+        }
     }
 
     private void rotate() {
