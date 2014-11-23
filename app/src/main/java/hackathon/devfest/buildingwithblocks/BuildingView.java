@@ -45,6 +45,12 @@ public class BuildingView extends View implements GestureDetector.OnGestureListe
         detector.setOnDoubleTapListener(this);
     }
 
+
+    public void update() {
+
+        invalidate();
+    }
+
     @Override
     protected void onSizeChanged(int w, int h, int oldw, int oldh) {
         super.onSizeChanged(w, h, oldw, oldh);
