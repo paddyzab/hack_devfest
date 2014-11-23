@@ -151,14 +151,22 @@ public class BuildingGameView extends BuildingBaseView implements GestureDetecto
     }
 
     public void moveLeft() {
+
         if (act_cursor_x >= 0) {
+
             act_cursor_x--;
+            if (act_cursor_x <= 0) {
+                act_cursor_x = 0;
+            }
         }
     }
 
     public void moveRight() {
         if (act_cursor_x <= getBlocksX()) {
             act_cursor_x++;
+            if(act_cursor_x >= getBlocksX()) {
+                act_cursor_x = getBlocksX() -1;
+            }
         }
     }
 
