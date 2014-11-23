@@ -19,8 +19,8 @@ import android.view.View;
 
 public class BuildingView extends View implements GestureDetector.OnGestureListener, GestureDetector.OnDoubleTapListener, SensorEventListener {
 
-    private int act_cursor_y=0;
-    private int act_cursor_x=BLOCKS_X/2+1;
+    private int act_cursor_y = 0;
+    private int act_cursor_x = BLOCKS_X / 2 + 1;
 
     private final static int BLOCKS_X = 23;
     private final static int BLOCKS_Y = 23;
@@ -36,6 +36,17 @@ public class BuildingView extends View implements GestureDetector.OnGestureListe
     private SensorManager sensorManager;
     private Sensor accelerometer;
     private IHouseSpec spec;
+
+    private GameUpdateListener listener;
+
+    public void setListener(GameUpdateListener listener) {
+        this.listener = listener;
+    }
+
+
+    public interface GameUpdateListener {
+        public void onHouseCompleted();
+    }
 
     public BuildingView(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -70,30 +81,26 @@ public class BuildingView extends View implements GestureDetector.OnGestureListe
 
     public void update() {
 
-
         act_cursor_y++;
 
-        if (act_cursor_x >= BLOCKS_X) {
-            act_cursor_x = BLOCKS_X -1;
-        }
+        if (act_cursor_y == BLOCKS_Y - 1 || backingArray[act_cursor_x][act_cursor_y + 1] > 0) {
+            backingArray[act_cursor_x][act_cursor_y] = 1;
+            act_cursor_y = 0;
 
-        if (act_cursor_x <= 0) {
-            act_cursor_x = 0;
-        }
+            final Point point = find();
 
-        if (act_cursor_y==BLOCKS_Y-1 || backingArray[act_cursor_x][act_cursor_y+1]>0){
-            backingArray[act_cursor_x][act_cursor_y]=1;
-            act_cursor_y=0;
+            if (point != null) {
+                listener.onHouseCompleted();
 
-           final Point point = find();
 
-            if (point!=null) {
-                for (int x = 0; x < BLOCKS_X; x++) {
-                    for (int y = 0; y <BLOCKS_Y; y++) {
-                        backingArray[x][y] = 1;
+                for (int x = 0; x < spec.getSize(); x++) {
+                    for (int y = 0; y < spec.getSize(); y++) {
+                        backingArray[point.x+x][point.y+y] = 0;
                     }
 
                 }
+
+
             }
         }
         invalidate();
@@ -130,15 +137,18 @@ public class BuildingView extends View implements GestureDetector.OnGestureListe
     }
 
     private Point find() {
-            int x;int y;int xx;int yy;
-        for( x = 0; x<=BLOCKS_X - spec.getSize(); x++) {
-            for( y = 0; y<=BLOCKS_Y - spec.getSize(); y++) {
+        int x;
+        int y;
+        int xx;
+        int yy;
+        for (x = 0; x <= BLOCKS_X - spec.getSize(); x++) {
+            for (y = 0; y <= BLOCKS_Y - spec.getSize(); y++) {
                 boolean maching = true;
                 exit:
                 if (maching) {
 
-                    for( xx = 0; xx<spec.getSize(); xx++) {
-                        for( yy = 0; yy<spec.getSize(); yy++) {
+                    for (xx = 0; xx < spec.getSize(); xx++) {
+                        for (yy = 0; yy < spec.getSize(); yy++) {
 
                             maching &= backingArray[x + xx][y + yy] == spec.getPlan()[xx][yy];
                             if (!maching) {
@@ -168,13 +178,13 @@ public class BuildingView extends View implements GestureDetector.OnGestureListe
     }
 
     public void moveLeft() {
-        if (act_cursor_x>=0){
+        if (act_cursor_x >= 0) {
             act_cursor_x--;
         }
     }
 
     public void moveRight() {
-        if (act_cursor_x<=BLOCKS_X) {
+        if (act_cursor_x <= BLOCKS_X) {
             act_cursor_x++;
         }
     }

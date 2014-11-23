@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.ActionBarActivity;
 import android.view.MotionEvent;
+import android.view.WindowManager;
 
 
 public class MainActivity extends ActionBarActivity {
@@ -15,11 +16,20 @@ public class MainActivity extends ActionBarActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        supportRequestWindowFeature(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_main);
 
-
         view = (BuildingView) findViewById(R.id.building_view);
+
+        view.setListener(new BuildingView.GameUpdateListener() {
+            @Override
+            public void onHouseCompleted() {
+                gameStats.incrementPoints();
+            }
+        });
+
         gameStats = (GameStateView) findViewById(R.id.game_stats);
 
         final Handler gameLoopHandler = new Handler();
