@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:padding="8dp">
+
+
+    <TextView android:id="@+id/textViewTimeLabel"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:text="Elapsed time:"
+              android:textStyle="bold"
+              android:textSize="22sp"/>
+
+    <TextView android:id="@+id/textViewElapsedTime"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:layout_toRightOf="@+id/textViewTimeLabel"
+              android:text="0"
+              android:textSize="22sp"
+              android:layout_marginLeft="8dp"/>
+
+    <TextView android:id="@+id/textViewPointsLabel"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:text="Earned points:"
+              android:textStyle="bold"
+              android:layout_below="@id/textViewTimeLabel"
+              android:textSize="22sp"/>
+
+    <TextView android:id="@+id/textViewPoints"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:layout_toRightOf="@+id/textViewPointsLabel"
+              android:layout_below="@id/textViewTimeLabel"
+              android:text="0"
+              android:textSize="22sp"
+              android:layout_marginLeft="8dp"/>
+
+</RelativeLayout>
