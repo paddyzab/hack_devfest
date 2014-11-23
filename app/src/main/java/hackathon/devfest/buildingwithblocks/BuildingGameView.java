@@ -76,7 +76,7 @@ public class BuildingGameView extends BuildingBaseView implements GestureDetecto
             backingArray[act_cursor_x][act_cursor_y] = 1;
 
 
-            if (act_cursor_y == 0) {
+            if (act_cursor_y == 1) {
                 listener.onGameEnded();
                 return;
             }

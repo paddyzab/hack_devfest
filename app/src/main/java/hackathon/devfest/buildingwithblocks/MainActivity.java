@@ -9,7 +9,7 @@ import android.view.WindowManager;
 
 public class MainActivity extends ActionBarActivity {
 
-    public static final int DELAY_MILLIS = 150;
+    public static final int DELAY_MILLIS = 50;
     public static final int DELAY_TIME_MILIS = 1000;
     private BuildingGameView view;
     private GameStateView gameStats;
