@@ -61,4 +61,30 @@ public class BuildingView extends View {
         }
     }
 
+    private Point find() {
+        final HouseSpec spec = new HouseSpec();
+        for(int x = 0; x<BLOCKS_X - HouseSpec.SIZE; x++) {
+            for(int y = 0; y<BLOCKS_Y - HouseSpec.SIZE; x++) {
+                boolean maching = true;
+                exit:
+                if (maching) {
+
+                    for(int xx = 0; xx<HouseSpec.SIZE; xx++) {
+                        for(int yy = 0; yy<HouseSpec.SIZE; yy++) {
+                            maching &= backingArray[x + xx][y + yy] == spec.getPlan()[xx][yy];
+                            if (!maching) {
+                                break exit;
+                            }
+                        }
+                    }
+                }
+
+                if (maching) {
+                    return new Point(x, y);
+                }
+            }
+        }
+        return null;
+    }
+
 }
