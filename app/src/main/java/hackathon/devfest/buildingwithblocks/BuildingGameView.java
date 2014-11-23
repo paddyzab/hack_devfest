@@ -23,6 +23,8 @@ public class BuildingGameView extends BuildingBaseView implements GestureDetecto
     private final static float ACCELERATION_TRESHOLD = 3.0f;
 
 
+    private boolean finished=false;
+
     private GestureDetectorCompat detector;
     private SensorManager sensorManager;
     private Sensor accelerometer;
@@ -70,6 +72,10 @@ public class BuildingGameView extends BuildingBaseView implements GestureDetecto
 
     public void update() {
 
+        if (finished) {
+            return;
+        }
+
         act_cursor_y++;
 
         if (act_cursor_y == getBlocksY() - 1 || backingArray[act_cursor_x][act_cursor_y + 1] > 0) {
@@ -77,6 +83,7 @@ public class BuildingGameView extends BuildingBaseView implements GestureDetecto
 
 
             if (act_cursor_y == 1) {
+                finished=true;
                 listener.onGameEnded();
                 return;
             }
@@ -255,5 +262,12 @@ public class BuildingGameView extends BuildingBaseView implements GestureDetecto
     @Override
     public void onAccuracyChanged(Sensor sensor, int i) {
         // do nothing
+    }
+
+    @Override
+    public void reset() {
+        super.reset();
+        finished=false;
+
     }
 }

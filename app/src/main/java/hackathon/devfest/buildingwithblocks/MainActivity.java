@@ -2,6 +2,8 @@ package hackathon.devfest.buildingwithblocks;
 
 import android.content.res.AssetFileDescriptor;
 import android.media.MediaPlayer;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.ActionBarActivity;
@@ -36,7 +38,16 @@ public class MainActivity extends ActionBarActivity {
 
             @Override
             public void onGameEnded() {
-                view.reset();
+                new AlertDialog.Builder(MainActivity.this).setMessage("you lost")
+                        .setPositiveButton("OK",new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                view.reset();
+                            }
+                        })
+                        .show();
+
+
             }
         });
 
